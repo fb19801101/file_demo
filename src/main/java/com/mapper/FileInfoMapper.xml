@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.FileInfoMapper">
+  <resultMap id="BaseResultMap" type="com.model.FileInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+    <result column="file_save" jdbcType="VARCHAR" property="fileSave" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+    <result column="file_size" jdbcType="INTEGER" property="fileSize" />
+    <result column="file_detail" jdbcType="VARCHAR" property="fileDetail" />
+    <result column="file_upload" jdbcType="TIMESTAMP" property="fileUpload" />
+    <result column="file_download" jdbcType="TIMESTAMP" property="fileDownload" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Model_Where_Clause">
+    <where>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.filePath != null">
+        and file_path = #{record.filePath,jdbcType=VARCHAR}
+      </if>
+      <if test="record.fileSave != null">
+        and file_save = #{record.fileSave,jdbcType=VARCHAR}
+      </if>
+      <if test="record.fileName != null">
+        and file_name = #{record.fileName,jdbcType=VARCHAR}
+      </if>
+      <if test="record.fileType != null">
+        and file_type = #{record.fileType,jdbcType=VARCHAR}
+      </if>
+      <if test="record.fileSize != null">
+        and file_size = #{record.fileSize,jdbcType=INTEGER}
+      </if>
+      <if test="record.fileDetail != null">
+        and file_detail = #{record.fileDetail,jdbcType=VARCHAR}
+      </if>
+      <if test="record.fileUpload != null">
+        and file_upload = #{record.fileUpload,jdbcType=TIMESTAMP}
+      </if>
+      <if test="record.fileDownload != null">
+        and file_download = #{record.fileDownload,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <sql id="Model_Query_Clause">
+    <where>
+      <if test="record.id !like concat('%', null">
+        id like concat('%', #{record.id,jdbcType=INTEGER}, '%')
+      </if>
+      <if test="record.filePath !like concat('%', null">
+        and file_path like concat('%', #{record.filePath,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="record.fileSave !like concat('%', null">
+        and file_save like concat('%', #{record.fileSave,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="record.fileName !like concat('%', null">
+        and file_name like concat('%', #{record.fileName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="record.fileType !like concat('%', null">
+        and file_type like concat('%', #{record.fileType,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="record.fileSize !like concat('%', null">
+        and file_size like concat('%', #{record.fileSize,jdbcType=INTEGER}, '%')
+      </if>
+      <if test="record.fileDetail !like concat('%', null">
+        and file_detail like concat('%', #{record.fileDetail,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="record.fileUpload !like concat('%', null">
+        and file_upload like concat('%', #{record.fileUpload,jdbcType=TIMESTAMP}, '%')
+      </if>
+      <if test="record.fileDownload !like concat('%', null">
+        and file_download like concat('%', #{record.fileDownload,jdbcType=TIMESTAMP}, '%')
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, file_path, file_save, file_name, file_type, file_size, file_detail, file_upload, 
+    file_download
+  </sql>
+  <sql id="Param_Column_List">
+    <if test="fields != null and fields.length() > 0">
+      ${fields}
+    </if>
+    <if test="fields == null or fields.length() == 0">
+      <include refid="Base_Column_List" />
+    </if>
+  </sql>
+  <sql id="Param_Where_Clause_Like">
+    <where>
+      <if test="field != null and field.length() > 0">
+        <if test="_parameter.containsKey('value') and value != null">
+          ${field} like concat('%', #{value}, '%')
+        </if>
+      </if>
+    </where>
+  </sql>
+  <sql id="Param_Where_Clause_Equal">
+    <where>
+      <if test="field != null and field.length() > 0">
+        <if test="_parameter.containsKey('value') and value != null">
+          ${field} = #{value}
+        </if>
+        <if test="_parameter.containsKey('value1') and _parameter.containsKey('value2')">
+          <if test="value1 != null and value2 != null">
+            ${field} between #{value1} and #{value2}
+          </if>
+        </if>
+      </if>
+    </where>
+  </sql>
+  <sql id="Param_Where_Clause_Sql">
+    <where>
+      <if test="sql != null and sql.length() > 0">
+        ${sql}
+      </if>
+      <if test="sql == null or sql.length() == 0">
+        id is null
+      </if>
+    </where>
+  </sql>
+  <select id="selectByExample" parameterType="com.model.FileInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByMinPrimaryKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    where id = (select min(id) from tb_file_info)
+  </select>
+  <select id="selectByMaxPrimaryKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    where id = (select max(id) from tb_file_info)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_file_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.model.FileInfoExample">
+    delete from tb_file_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.model.FileInfo" useGeneratedKeys="true">
+    insert into tb_file_info (id, file_path, file_save, file_name,
+      file_type, file_size, file_detail, 
+      file_upload, file_download)
+    values (#{record.id,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR}, #{fileSave,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
+      #{fileType,jdbcType=VARCHAR}, #{fileSize,jdbcType=INTEGER}, #{fileDetail,jdbcType=VARCHAR}, 
+      #{fileUpload,jdbcType=TIMESTAMP}, #{fileDownload,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.model.FileInfo" useGeneratedKeys="true">
+    insert into tb_file_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="filePath != null">
+        file_path,
+      </if>
+      <if test="fileSave != null">
+        file_save,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="fileType != null">
+        file_type,
+      </if>
+      <if test="fileSize != null">
+        file_size,
+      </if>
+      <if test="fileDetail != null">
+        file_detail,
+      </if>
+      <if test="fileUpload != null">
+        file_upload,
+      </if>
+      <if test="fileDownload != null">
+        file_download,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSave != null">
+        #{fileSave,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="fileDetail != null">
+        #{fileDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUpload != null">
+        #{fileUpload,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileDownload != null">
+        #{fileDownload,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.model.FileInfoExample" resultType="java.lang.Long">
+    select count(*) from tb_file_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_file_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.filePath != null">
+        file_path = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSave != null">
+        file_save = #{record.fileSave,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileName != null">
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileType != null">
+        file_type = #{record.fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null">
+        file_size = #{record.fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileDetail != null">
+        file_detail = #{record.fileDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileUpload != null">
+        file_upload = #{record.fileUpload,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fileDownload != null">
+        file_download = #{record.fileDownload,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_file_info
+    set id = #{record.id,jdbcType=INTEGER},
+      file_path = #{record.filePath,jdbcType=VARCHAR},
+      file_save = #{record.fileSave,jdbcType=VARCHAR},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      file_type = #{record.fileType,jdbcType=VARCHAR},
+      file_size = #{record.fileSize,jdbcType=INTEGER},
+      file_detail = #{record.fileDetail,jdbcType=VARCHAR},
+      file_upload = #{record.fileUpload,jdbcType=TIMESTAMP},
+      file_download = #{record.fileDownload,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.FileInfo">
+    update tb_file_info
+    <set>
+      <if test="filePath != null">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSave != null">
+        file_save = #{fileSave,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        file_size = #{fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="fileDetail != null">
+        file_detail = #{fileDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUpload != null">
+        file_upload = #{fileUpload,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fileDownload != null">
+        file_download = #{fileDownload,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.FileInfo">
+    update tb_file_info
+    set file_path = #{filePath,jdbcType=VARCHAR},
+      file_save = #{fileSave,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
+      file_size = #{fileSize,jdbcType=INTEGER},
+      file_detail = #{fileDetail,jdbcType=VARCHAR},
+      file_upload = #{fileUpload,jdbcType=TIMESTAMP},
+      file_download = #{fileDownload,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAllModel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+  </select>
+  <select id="selectByParam" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    <include refid="Model_Where_Clause" />
+  </select>
+  <select id="queryByParam" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    <include refid="Model_Query_Clause" />
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    <include refid="Param_Where_Clause_Equal" />
+  </select>
+  <select id="queryByCondition" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    <include refid="Param_Where_Clause_Like" />
+  </select>
+  <select id="selectBySql" resultMap="BaseResultMap" statementType="STATEMENT">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+    <include refid="Param_Where_Clause_Sql" />
+  </select>
+  <select id="selectFieldsByParam" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Param_Column_List" />
+    from tb_file_info
+    <include refid="Model_Where_Clause" />
+  </select>
+  <select id="queryFieldsByParam" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Param_Column_List" />
+    from tb_file_info
+    <include refid="Model_Query_Clause" />
+  </select>
+  <select id="selectFieldsByCondition" resultMap="BaseResultMap">
+    select
+    <include refid="Param_Column_List" />
+    from tb_file_info
+    <include refid="Param_Where_Clause_Equal" />
+  </select>
+  <select id="queryFieldsByCondition" resultMap="BaseResultMap">
+    select
+    <include refid="Param_Column_List" />
+    from tb_file_info
+    <include refid="Param_Where_Clause_Like" />
+  </select>
+  <select id="selectFieldsBySql" resultMap="BaseResultMap" statementType="STATEMENT">
+    select
+    <include refid="Param_Column_List" />
+    from tb_file_info
+    <include refid="Param_Where_Clause_Sql" />
+  </select>
+</mapper>
