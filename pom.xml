@@ -32,7 +32,7 @@
     <log4j.version>1.2.17</log4j.version>
     <json.version>2.4</json.version>
     <fastjson.version>1.2.66</fastjson.version>
-    <fasterxml.version>2.10.3</fasterxml.version>
+    <fasterxml.version>2.12.1</fasterxml.version>
     <codehaus.version>1.9.13</codehaus.version>
     <woodstox.version>6.1.1</woodstox.version>
     <lombok.version>1.18.12</lombok.version>
